@@ -67,10 +67,11 @@ public class SignUpActivity extends Activity {
 		EditText camPwd = (EditText) findViewById(R.id.eText_ippwd);
 		int error = 0;
 		
+		// Validate that the textBoxes aren't empty - BEGIN
 		if (Validations.eTextIsEmpty(email)){
 			TextView tv = (TextView) findViewById(R.id.tView_email);
 			tv.setTextColor(Color.RED);
-			error=1;
+			error = 1;
 		}
 		
 		if (Validations.eTextIsEmpty(password)){
@@ -82,7 +83,7 @@ public class SignUpActivity extends Activity {
 		if (Validations.eTextIsEmpty(confPwd)){
 			TextView tv = (TextView) findViewById(R.id.tView_confpwd);
 			tv.setTextColor(Color.RED);
-			error=1;
+			error = 1;
 		}
 		
 		if (Validations.eTextIsEmpty(ipCam)){
@@ -94,14 +95,23 @@ public class SignUpActivity extends Activity {
 		if (Validations.eTextIsEmpty(camPwd)){
 			TextView tv = (TextView) findViewById(R.id.tView_ippwd);
 			tv.setTextColor(Color.RED);
-			error=1;
+			error = 1;
+		}
+		
+		// Validate that the textBoxes aren't empty - END
+		
+		if (!password.getText().toString().equals(confPwd.getText().toString())){
+			TextView tv = (TextView) findViewById(R.id.tView_password);
+			tv.setTextColor(Color.RED);
+			tv = (TextView) findViewById(R.id.tView_confpwd);
+			tv.setTextColor(Color.RED);
+			error = 1;
 		}
 		
 		if (error == 0){
 			// register account
 			Authentication.registerAccount(email.getText().toString(), 
 					password.getText().toString(),
-					confPwd.getText().toString(),
 					ipCam.getText().toString(),
 					camPwd.getText().toString());
 		}
