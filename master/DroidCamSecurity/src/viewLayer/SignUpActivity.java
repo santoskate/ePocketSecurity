@@ -1,22 +1,44 @@
 package viewLayer;
 
-import viewLayer.util.Validations;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.apache.http.NameValuePair;
+import org.apache.http.message.BasicNameValuePair;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 
 import businessLayer.Authentication;
+import businessLayer.util.JSONParser;
 
 import com.example.droidcamsecurity.R;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.app.Activity;
-import android.graphics.Color;
+import android.app.ProgressDialog;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.support.v4.app.NavUtils;
 
 public class SignUpActivity extends Activity {
+	
+	// Progress Dialog
+	private ProgressDialog pDialog;
+	
+	private EditText email;
+	private EditText password;
+	private EditText ipCam;
+	private EditText camPwd;
+	
+	JSONParser jsonParser = new JSONParser();
+	
+	// JSON Node names
+    private static final String TAG_SUCCESS = "success";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -60,62 +82,84 @@ public class SignUpActivity extends Activity {
 	}
 	
 	public void resgisterAccount(View view){
-		EditText email = (EditText) findViewById(R.id.eText_email);
-		EditText password = (EditText) findViewById(R.id.eText_password);
-		EditText confPwd = (EditText) findViewById(R.id.eText_confpwd);
-		EditText ipCam = (EditText) findViewById(R.id.eText_ipcam);
-		EditText camPwd = (EditText) findViewById(R.id.eText_ippwd);
-		int error = 0;
+		email = (EditText) findViewById(R.id.eText_email);
+		password = (EditText) findViewById(R.id.eText_password);
+		ipCam = (EditText) findViewById(R.id.eText_ipcam);
+		camPwd = (EditText) findViewById(R.id.eText_ippwd);
 		
-		// Validate that the textBoxes aren't empty - BEGIN
-		if (Validations.eTextIsEmpty(email)){
-			TextView tv = (TextView) findViewById(R.id.tView_email);
-			tv.setTextColor(Color.RED);
-			error = 1;
-		}
-		
-		if (Validations.eTextIsEmpty(password)){
-			TextView tv = (TextView) findViewById(R.id.tView_password);
-			tv.setTextColor(Color.RED);
-			error=1;
-		}
-		
-		if (Validations.eTextIsEmpty(confPwd)){
-			TextView tv = (TextView) findViewById(R.id.tView_confpwd);
-			tv.setTextColor(Color.RED);
-			error = 1;
-		}
-		
-		if (Validations.eTextIsEmpty(ipCam)){
-			TextView tv = (TextView) findViewById(R.id.tView_ipcam);
-			tv.setTextColor(Color.RED);
-			error=1;
-		}
-		
-		if (Validations.eTextIsEmpty(camPwd)){
-			TextView tv = (TextView) findViewById(R.id.tView_ippwd);
-			tv.setTextColor(Color.RED);
-			error = 1;
-		}
-		
-		// Validate that the textBoxes aren't empty - END
-		
-		if (!password.getText().toString().equals(confPwd.getText().toString())){
-			TextView tv = (TextView) findViewById(R.id.tView_password);
-			tv.setTextColor(Color.RED);
-			tv = (TextView) findViewById(R.id.tView_confpwd);
-			tv.setTextColor(Color.RED);
-			error = 1;
-		}
-		
-		if (error == 0){
-			// register account
-			Authentication.registerAccount(email.getText().toString(), 
-					password.getText().toString(),
-					ipCam.getText().toString(),
-					camPwd.getText().toString());
+		if (Authentication.signUpValidateForm(SignUpActivity.this) == 0){
+			new CreateNewAccount().execute();
 		}
 		
 	}
 
+	
+	/**
+     * Background Async Task to Create new product
+     * */
+	class CreateNewAccount extends AsyncTask<String, String, String> {
+		
+		/**
+         * Before starting background thread Show Progress Dialog
+         * */
+		@Override
+		protected void onPreExecute() {
+			super.onPreExecute();
+			pDialog = new ProgressDialog(SignUpActivity.this);
+			pDialog.setMessage("Wait..");
+			pDialog.setIndeterminate(false);
+			pDialog.setCancelable(true);
+			pDialog.show();
+		}
+		
+		/**
+         * Creating product
+         * */
+		protected String doInBackground(String... args) {
+			// Building Parameters
+	        List<NameValuePair> params = new ArrayList<NameValuePair>();
+	        params.add(new BasicNameValuePair("email", email.getText().toString()));
+	        params.add(new BasicNameValuePair("password", password.getText().toString()));
+	        params.add(new BasicNameValuePair("cam_ip", ipCam.getText().toString()));
+	        params.add(new BasicNameValuePair("cam_password", camPwd.getText().toString()));
+
+	        // getting JSON Object
+	        // Note that create product URL accepts POST method
+	        JSONObject json = jsonParser.makeHttpRequest(getText(R.string.url_create_user).toString(),
+	                "POST", params);
+
+	        // check log cat fro response
+	        Log.d("Create Response", json.toString());
+
+	        // check for success tag
+	        try {
+	            int success = json.getInt(TAG_SUCCESS);
+
+	            if (success == 1) {
+	                /*// successfully created product
+	                Intent i = new Intent(getApplicationContext(), AllProductsActivity.class);
+	                startActivity(i);
+
+	                // closing this screen
+	                finish();*/
+	            } else {
+	                // failed to create product
+	            }
+	        } catch (JSONException e) {
+	            e.printStackTrace();
+	        }
+
+	        return null;
+		}
+		
+		/**
+		 * After completing background task Dismiss the progress dialog
+		 *
+ 		**/
+		protected void onPostExecute(String file_url) {
+			// dismiss the dialog once done
+			pDialog.dismiss();
+		}
+		
+	}
 }

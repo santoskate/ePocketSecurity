@@ -1,71 +1,82 @@
 package businessLayer;
 
-import java.util.ArrayList;
-import java.util.List;
+import viewLayer.util.Validations;
+import android.app.Activity;
+import android.graphics.Color;
+import android.widget.EditText;
+import android.widget.TextView;
 
-import org.apache.http.NameValuePair;
-import org.apache.http.message.BasicNameValuePair;
-import org.json.JSONException;
-import org.json.JSONObject;
-import businessLayer.util.JSONParser;
-import android.os.StrictMode;
-import android.util.Log;
+import com.example.droidcamsecurity.R;
 
-public class Authentication {
+/**
+ * 
+ * @author Kate
+ *
+ * Authentication validations
+ *
+ */
+public class Authentication extends Activity {
  
-    static JSONParser jsonParser = new JSONParser();
-    String email;
-    String pass;
-    String ipCam;
-    String camPwd;
-    
-    // URL to create new product
-    private static String url_create_user = "http://www.catsart.net/WebservicesPHP/create_account.php";
- 
-    // JSON Node names
-    private static final String TAG_SUCCESS = "success";
-    
-	public static void registerAccount(String email, String password,
-			String ipCam, String camPwd) {
-
-		StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-		StrictMode.setThreadPolicy(policy);
+    public static int signUpValidateForm(Activity actSignUp
+    		//EditText email, 
+    		//EditText password, EditText confPwd, EditText ipCam, EditText camPwd
+    		){
+    	
+    	TextView tvEmail = (TextView) actSignUp.findViewById(R.id.tView_email);
+    	TextView tvPwd = (TextView) actSignUp.findViewById(R.id.tView_password);
+    	TextView tvConfPwd = (TextView) actSignUp.findViewById(R.id.tView_confpwd);
+    	TextView tvIpCam = (TextView) actSignUp.findViewById(R.id.tView_ipcam);
+    	TextView tvIpPwd = (TextView) actSignUp.findViewById(R.id.tView_ippwd);
+    	
+    	EditText email = (EditText) actSignUp.findViewById(R.id.eText_email);
+    	EditText password = (EditText) actSignUp.findViewById(R.id.eText_password);
+    	EditText confPwd = (EditText) actSignUp.findViewById(R.id.eText_confpwd);
+    	EditText ipCam = (EditText) actSignUp.findViewById(R.id.eText_ipcam);
+    	EditText camPwd = (EditText) actSignUp.findViewById(R.id.eText_ippwd);
+    	
+    	tvEmail.setTextColor(Color.BLACK);
+    	tvPwd.setTextColor(Color.BLACK);
+    	tvConfPwd.setTextColor(Color.BLACK);
+    	tvIpCam.setTextColor(Color.BLACK);
+    	tvIpPwd.setTextColor(Color.BLACK);
+    	
+    	int erro = 0;
+    	
+		// Validate that the textBoxes aren't empty - BEGIN
+		if (Validations.eTextIsEmpty(email)){
+			tvEmail.setTextColor(Color.RED);
+			erro = 1;
+		}
 		
-        // Building Parameters
-        List<NameValuePair> params = new ArrayList<NameValuePair>();
-        params.add(new BasicNameValuePair("email", email));
-        params.add(new BasicNameValuePair("password", password));
-        params.add(new BasicNameValuePair("cam_ip", ipCam));
-        params.add(new BasicNameValuePair("cam_password", camPwd));
-
-        // getting JSON Object
-        // Note that create product URL accepts POST method
-        JSONObject json = jsonParser.makeHttpRequest(url_create_user,
-                "POST", params);
-
-        // check log cat fro response
-        Log.d("Create Response", json.toString());
-
-        // check for success tag
-        try {
-            int success = json.getInt(TAG_SUCCESS);
-
-            if (success == 1) {
-                /*// successfully created product
-                Intent i = new Intent(getApplicationContext(), AllProductsActivity.class);
-                startActivity(i);
-
-                // closing this screen
-                finish();*/
-            } else {
-                // failed to create product
-            }
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-        //return null;
-    
-	}
+		if (Validations.eTextIsEmpty(password)){
+			tvPwd.setTextColor(Color.RED);
+			erro = 1;
+		}
+		
+		if (Validations.eTextIsEmpty(confPwd)){
+			tvConfPwd.setTextColor(Color.RED);
+			erro = 1;
+		}
+		
+		if (Validations.eTextIsEmpty(ipCam)){
+			tvIpCam.setTextColor(Color.RED);
+			erro = 1;
+		}
+		
+		if (Validations.eTextIsEmpty(camPwd)){
+			tvIpPwd.setTextColor(Color.RED);
+			erro = 1;
+		}
+		
+		// Validate that the textBoxes aren't empty - END
+		
+		if (!password.getText().toString().equals(confPwd.getText().toString())){
+			tvPwd.setTextColor(Color.RED);
+			tvConfPwd.setTextColor(Color.RED);
+			erro = 1;
+		}
+    	
+    	return erro;
+    }
 
 }

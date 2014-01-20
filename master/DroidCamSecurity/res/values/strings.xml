@@ -18,6 +18,7 @@
     <string name="title_activity_sign_in">Sign In</string>
     
     <!-- Sign Up Activity Strings -->
+    <string name="url_create_user">http://www.catsart.net/WebservicesPHP/create_account.php</string>
     <string name="title_activity_sign_up">Sign Up</string>
     <string name="title_confirmpwd">Confirm Password</string>
     <string name="title_ipcam">Camera IP</string>

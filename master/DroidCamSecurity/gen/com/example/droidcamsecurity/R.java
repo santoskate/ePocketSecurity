@@ -82,14 +82,15 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         /**  Sign In Activity Strings 
          */
         public static final int title_activity_sign_in=0x7f060008;
+        public static final int title_activity_sign_up=0x7f06000a;
+        public static final int title_confirmpwd=0x7f06000b;
+        public static final int title_email=0x7f060001;
+        public static final int title_ipcam=0x7f06000c;
+        public static final int title_ippwd=0x7f06000d;
+        public static final int title_password=0x7f060002;
         /**  Sign Up Activity Strings 
          */
-        public static final int title_activity_sign_up=0x7f060009;
-        public static final int title_confirmpwd=0x7f06000a;
-        public static final int title_email=0x7f060001;
-        public static final int title_ipcam=0x7f06000b;
-        public static final int title_ippwd=0x7f06000c;
-        public static final int title_password=0x7f060002;
+        public static final int url_create_user=0x7f060009;
     }
     public static final class style {
         /** 

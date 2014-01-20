@@ -3,7 +3,13 @@ package viewLayer.util;
 import android.view.View;
 import android.widget.EditText;
 
-
+/**
+ *
+ * @author Kate
+ * 
+ * Generic validations
+ *
+ */
 public class Validations {
 	
 	public static boolean eTextIsEmpty(View view){
