@@ -17,10 +17,7 @@ import com.example.droidcamsecurity.R;
  */
 public class Authentication extends Activity {
  
-    public static int signUpValidateForm(Activity actSignUp
-    		//EditText email, 
-    		//EditText password, EditText confPwd, EditText ipCam, EditText camPwd
-    		){
+    public static int signUpValidateForm(Activity actSignUp){
     	
     	TextView tvEmail = (TextView) actSignUp.findViewById(R.id.tView_email);
     	TextView tvPwd = (TextView) actSignUp.findViewById(R.id.tView_password);

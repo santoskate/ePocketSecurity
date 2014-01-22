@@ -17,7 +17,11 @@ import com.example.droidcamsecurity.R;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.AlertDialog.Builder;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -99,6 +103,7 @@ public class SignUpActivity extends Activity {
      * */
 	class CreateNewAccount extends AsyncTask<String, String, String> {
 		
+		public Boolean flag;
 		/**
          * Before starting background thread Show Progress Dialog
          * */
@@ -134,7 +139,7 @@ public class SignUpActivity extends Activity {
 	        // check for success tag
 	        try {
 	            int success = json.getInt(TAG_SUCCESS);
-
+	            
 	            if (success == 1) {
 	                /*// successfully created product
 	                Intent i = new Intent(getApplicationContext(), AllProductsActivity.class);
@@ -142,9 +147,14 @@ public class SignUpActivity extends Activity {
 
 	                // closing this screen
 	                finish();*/
+	            	
+	            	flag = true;
+	            	
 	            } else {
 	                // failed to create product
+	            	flag = false;
 	            }
+	            
 	        } catch (JSONException e) {
 	            e.printStackTrace();
 	        }
@@ -159,6 +169,23 @@ public class SignUpActivity extends Activity {
 		protected void onPostExecute(String file_url) {
 			// dismiss the dialog once done
 			pDialog.dismiss();
+			
+			Builder alert = new AlertDialog.Builder(SignUpActivity.this);
+			alert.setTitle(getResources().getString(R.string.title_activity_sign_up));
+			
+			if(flag){
+				alert.setMessage(getResources().getString(R.string.sign_up_success));
+				alert.setPositiveButton("OK",null);
+				alert.show();
+                
+				finish();
+                
+			} else{
+				alert.setMessage(getResources().getString(R.string.sign_up_unsuccess));
+				alert.setPositiveButton("OK",null);
+				alert.show(); 
+			}
+				
 		}
 		
 	}

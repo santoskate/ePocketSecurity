@@ -23,5 +23,7 @@
     <string name="title_confirmpwd">Confirm Password</string>
     <string name="title_ipcam">Camera IP</string>
     <string name="title_ippwd">Camera Password</string>
+    <string name="sign_up_success">Successfuly Sign Up!</string>
+    <string name="sign_up_unsuccess">Sorry, it\'s not possible to Sign Up at the moment.</string>
     
 </resources>
