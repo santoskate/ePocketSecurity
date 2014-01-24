@@ -1,22 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-	
+
     <!-- Common strings -->
     <string name="submit_button">Submit</string>
     <string name="title_email">Email</string>
     <string name="title_password">Password</string>
-    
+    <string name="msg_progress">Wait...</string>
+
     <!-- Fullscreen Activity Strings -->
     <string name="app_name">ePocket Security</string>
     <string name="login_button">Sign In</string>
     <string name="sign_up_button">Sign Up</string>
     <string name="dummy_content">ePocket\nSecurity</string>
     <string name="action_settings">Settings</string>
-    
 
     <!-- Sign In Activity Strings -->
+    <string name="url_login">http://www.catsart.net/WebservicesPHP/login.php</string>
     <string name="title_activity_sign_in">Sign In</string>
-    
+    <string name="sign_in_unsuccess">Wrong credentials! Please, try again.</string>
+
     <!-- Sign Up Activity Strings -->
     <string name="url_create_user">http://www.catsart.net/WebservicesPHP/create_account.php</string>
     <string name="title_activity_sign_up">Sign Up</string>
@@ -25,5 +27,7 @@
     <string name="title_ippwd">Camera Password</string>
     <string name="sign_up_success">Successfuly Sign Up!</string>
     <string name="sign_up_unsuccess">Sorry, it\'s not possible to Sign Up at the moment.</string>
-    
+    <string name="title_item_list">Items</string>
+    <string name="title_item_detail">Item Detail</string>
+
 </resources>

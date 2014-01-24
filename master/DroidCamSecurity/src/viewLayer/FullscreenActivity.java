@@ -6,6 +6,7 @@ import com.example.droidcamsecurity.R;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -47,6 +48,8 @@ public class FullscreenActivity extends Activity {
      * The instance of the {@link SystemUiHider} for this activity.
      */
     private SystemUiHider mSystemUiHider;
+    
+    public Context cntxofParent = FullscreenActivity.this;
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -136,7 +139,13 @@ public class FullscreenActivity extends Activity {
         // are available.
         delayedHide(100);
     }
-
+    
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(resultCode==2){
+            finish();
+        }
+    }
 
     /**
      * Touch listener to use for in-layout UI controls to delay hiding the
@@ -171,12 +180,12 @@ public class FullscreenActivity extends Activity {
     }
     
     public void signIn(View view){
-    	Intent intent = new Intent(this, SignInActivity.class);
-    	startActivity(intent);
+    	Intent intent = new Intent(FullscreenActivity.this, SignInActivity.class);
+    	startActivityForResult(intent, 2);
     }
     
     public void signUp(View view){
-    	Intent intent = new Intent(this, SignUpActivity.class);
+    	Intent intent = new Intent(FullscreenActivity.this, SignUpActivity.class);
     	startActivity(intent);
     }
 }

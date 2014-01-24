@@ -17,6 +17,12 @@ import com.example.droidcamsecurity.R;
  */
 public class Authentication extends Activity {
  
+	/**
+	 * Validate that the fields are not empty
+	 * Validate the confirmation of the user's password
+	 * @param actSignUp
+	 * @return
+	 */
     public static int signUpValidateForm(Activity actSignUp){
     	
     	TextView tvEmail = (TextView) actSignUp.findViewById(R.id.tView_email);
@@ -75,5 +81,36 @@ public class Authentication extends Activity {
     	
     	return erro;
     }
+
+    /**
+     * Validate that the fields are not empty
+     * 
+     * @param actSignIn Activity to validate
+     * @return 1 - OK ; 0 - NOT OK
+     */
+	public static int signInValidateForm(Activity actSignIn) {
+		
+		TextView tvEmail = (TextView) actSignIn.findViewById(R.id.tViewEmail);
+    	TextView tvPwd = (TextView) actSignIn.findViewById(R.id.tViewPwd);
+    	EditText email = (EditText) actSignIn.findViewById(R.id.eTextEmail);
+    	EditText password = (EditText) actSignIn.findViewById(R.id.eTextPwd);
+    	
+    	tvEmail.setTextColor(Color.BLACK);
+    	tvPwd.setTextColor(Color.BLACK);
+    	
+    	int erro = 0;
+    	
+		if (Validations.eTextIsEmpty(email)){
+			tvEmail.setTextColor(Color.RED);
+			erro = 1;
+		}
+		
+		if (Validations.eTextIsEmpty(password)){
+			tvPwd.setTextColor(Color.RED);
+			erro = 1;
+		}
+		
+		return erro;
+	}
 
 }

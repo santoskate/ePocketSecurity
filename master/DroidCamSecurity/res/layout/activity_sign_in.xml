@@ -17,13 +17,13 @@
         tools:ignore="UselessParent">
         
         <TextView
-	        android:id="@+id/textView1"
+	        android:id="@+id/tViewEmail"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:text="@string/title_email" />
 
         <EditText
-            android:id="@+id/editText1"
+            android:id="@+id/eTextEmail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="textEmailAddress" >
@@ -32,12 +32,13 @@
         </EditText>
 	
 	    <TextView
+	        android:id="@+id/tViewPwd"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:text="@string/title_password" />
 
 	    <EditText
-	        android:id="@+id/editText2"
+	        android:id="@+id/eTextPwd"
 	        android:layout_width="match_parent"
 	        android:layout_height="wrap_content"
 	        android:ems="10"
@@ -47,7 +48,8 @@
 	        android:id="@+id/button1"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
-	        android:text="@string/submit_button" />
+	        android:text="@string/submit_button"
+	        android:onClick="logIn" />
 	    
     </LinearLayout>
 

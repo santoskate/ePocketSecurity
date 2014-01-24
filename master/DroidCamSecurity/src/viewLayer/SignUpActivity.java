@@ -20,8 +20,6 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
 import android.app.ProgressDialog;
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -111,14 +109,14 @@ public class SignUpActivity extends Activity {
 		protected void onPreExecute() {
 			super.onPreExecute();
 			pDialog = new ProgressDialog(SignUpActivity.this);
-			pDialog.setMessage("Wait..");
+			pDialog.setMessage(getText(R.string.msg_progress));
 			pDialog.setIndeterminate(false);
 			pDialog.setCancelable(true);
 			pDialog.show();
 		}
 		
 		/**
-         * Creating product
+         * Creating User account
          * */
 		protected String doInBackground(String... args) {
 			// Building Parameters
@@ -128,12 +126,11 @@ public class SignUpActivity extends Activity {
 	        params.add(new BasicNameValuePair("cam_ip", ipCam.getText().toString()));
 	        params.add(new BasicNameValuePair("cam_password", camPwd.getText().toString()));
 
-	        // getting JSON Object
-	        // Note that create product URL accepts POST method
+	        // getting JSON Object from the create_account WebService
 	        JSONObject json = jsonParser.makeHttpRequest(getText(R.string.url_create_user).toString(),
 	                "POST", params);
 
-	        // check log cat fro response
+	        // logging
 	        Log.d("Create Response", json.toString());
 
 	        // check for success tag
@@ -141,17 +138,8 @@ public class SignUpActivity extends Activity {
 	            int success = json.getInt(TAG_SUCCESS);
 	            
 	            if (success == 1) {
-	                /*// successfully created product
-	                Intent i = new Intent(getApplicationContext(), AllProductsActivity.class);
-	                startActivity(i);
-
-	                // closing this screen
-	                finish();*/
-	            	
 	            	flag = true;
-	            	
 	            } else {
-	                // failed to create product
 	            	flag = false;
 	            }
 	            
@@ -171,7 +159,7 @@ public class SignUpActivity extends Activity {
 			pDialog.dismiss();
 			
 			Builder alert = new AlertDialog.Builder(SignUpActivity.this);
-			alert.setTitle(getResources().getString(R.string.title_activity_sign_up));
+			alert.setTitle(getString(R.string.title_activity_sign_up));
 			
 			if(flag){
 				alert.setMessage(getResources().getString(R.string.sign_up_success));
@@ -181,7 +169,7 @@ public class SignUpActivity extends Activity {
 				finish();
                 
 			} else{
-				alert.setMessage(getResources().getString(R.string.sign_up_unsuccess));
+				alert.setMessage(getString(R.string.sign_up_unsuccess));
 				alert.setPositiveButton("OK",null);
 				alert.show(); 
 			}
