@@ -93,14 +93,14 @@ public class SignInActivity extends Activity {
 	}
 	
 	/**
-     * Background Async Task to Create new product
-     * */
+	 * Background Async Task to Create new product
+	 * */
 	class LogInValidation extends AsyncTask<String, String, String> {
 		
 		public Boolean flag = true;
 		/**
-         * Before starting background thread Show Progress Dialog
-         * */
+		 * Before starting background thread Show Progress Dialog
+		 * */
 		@Override
 		protected void onPreExecute() {
 			super.onPreExecute();

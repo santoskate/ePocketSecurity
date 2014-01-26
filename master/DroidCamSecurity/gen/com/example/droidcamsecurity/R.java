@@ -92,35 +92,36 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int sign_up=0x7f080001;
     }
     public static final class string {
-        public static final int action_settings=0x7f060008;
+        public static final int action_settings=0x7f060009;
         /**  Fullscreen Activity Strings 
          */
-        public static final int app_name=0x7f060004;
-        public static final int dummy_content=0x7f060007;
-        public static final int login_button=0x7f060005;
-        public static final int msg_progress=0x7f060003;
-        public static final int sign_in_unsuccess=0x7f06000b;
-        public static final int sign_up_button=0x7f060006;
-        public static final int sign_up_success=0x7f060011;
-        public static final int sign_up_unsuccess=0x7f060012;
+        public static final int app_name=0x7f060005;
+        public static final int dummy_content=0x7f060008;
+        public static final int login_button=0x7f060006;
+        public static final int msg_progress=0x7f060004;
+        public static final int sign_in_unsuccess=0x7f06000c;
+        public static final int sign_up_button=0x7f060007;
+        public static final int sign_up_success=0x7f060012;
+        public static final int sign_up_unsuccess=0x7f060013;
+        public static final int submit_button=0x7f060001;
+        public static final int title_activity_sign_in=0x7f06000b;
+        public static final int title_activity_sign_up=0x7f06000e;
+        public static final int title_confirmpwd=0x7f06000f;
+        public static final int title_email=0x7f060002;
+        public static final int title_ipcam=0x7f060010;
+        public static final int title_ippwd=0x7f060011;
+        public static final int title_item_detail=0x7f060015;
+        public static final int title_item_list=0x7f060014;
+        public static final int title_password=0x7f060003;
         /**  Common strings 
          */
-        public static final int submit_button=0x7f060000;
-        public static final int title_activity_sign_in=0x7f06000a;
-        public static final int title_activity_sign_up=0x7f06000d;
-        public static final int title_confirmpwd=0x7f06000e;
-        public static final int title_email=0x7f060001;
-        public static final int title_ipcam=0x7f06000f;
-        public static final int title_ippwd=0x7f060010;
-        public static final int title_item_detail=0x7f060014;
-        public static final int title_item_list=0x7f060013;
-        public static final int title_password=0x7f060002;
+        public static final int url=0x7f060000;
         /**  Sign Up Activity Strings 
          */
-        public static final int url_create_user=0x7f06000c;
+        public static final int url_create_user=0x7f06000d;
         /**  Sign In Activity Strings 
          */
-        public static final int url_login=0x7f060009;
+        public static final int url_login=0x7f06000a;
     }
     public static final class style {
         /** 

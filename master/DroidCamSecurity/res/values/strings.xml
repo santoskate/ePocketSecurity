@@ -2,6 +2,7 @@
 <resources>
 
     <!-- Common strings -->
+    <string name="url">http://www.catsart.net/</string>
     <string name="submit_button">Submit</string>
     <string name="title_email">Email</string>
     <string name="title_password">Password</string>
