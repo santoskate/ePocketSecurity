@@ -11,7 +11,7 @@ import org.json.JSONObject;
 import businessLayer.Authentication;
 import businessLayer.util.JSONParser;
 
-import com.example.droidcamsecurity.ItemListActivity;
+import com.example.droidcamsecurity.AccountActivity;
 import com.example.droidcamsecurity.R;
 
 import android.os.AsyncTask;
@@ -130,7 +130,7 @@ public class SignInActivity extends Activity {
 	            
 	            if (success == 1) {
 	                // successfully login
-	                Intent i = new Intent(getApplicationContext(), ItemListActivity.class);
+	                Intent i = new Intent(getApplicationContext(), AccountActivity.class);
 	                startActivity(i);
 	            	
 	            	// To finish Parent and go on

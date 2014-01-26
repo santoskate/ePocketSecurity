@@ -28,7 +28,11 @@
     <string name="title_ippwd">Camera Password</string>
     <string name="sign_up_success">Successfuly Sign Up!</string>
     <string name="sign_up_unsuccess">Sorry, it\'s not possible to Sign Up at the moment.</string>
-    <string name="title_item_list">Items</string>
-    <string name="title_item_detail">Item Detail</string>
+    
+    <!-- Account Activity Strings -->
+    <string name="title_activity_account">Welcome</string>
+    <string name="title_section1">Live</string>
+    <string name="title_section2">Configurations</string>
+    <string name="title_section3">About</string>
 
 </resources>
