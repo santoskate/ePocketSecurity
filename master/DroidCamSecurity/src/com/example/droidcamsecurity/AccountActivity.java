@@ -10,6 +10,8 @@ import java.util.Locale;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -148,28 +150,31 @@ public class AccountActivity extends FragmentActivity {
 		}
 		
 		private class GetXMLTask extends AsyncTask<String, Void, Bitmap> {
+			private String url;
+			Drawable drawable;
 	        @Override
 	        protected Bitmap doInBackground(String... urls) {
+	        	url = urls[0];
 	            Bitmap map = null;
-	            for (String url : urls) {
-	                map = downloadImage(url);
-	            }
-	            
-	            GetXMLTask task = new GetXMLTask();
-	            
-	            task.execute(urls);
-	            
+	            //for (String url : urls) {
+	                //map = downloadImage(url);
+	            	drawable = LoadImageFromWebOperations(url);
+	            //}
+	            	
 	            return map;
 	        }
 	 
 	        // Sets the Bitmap returned by doInBackground
 	        @Override
 	        protected void onPostExecute(Bitmap result) {
-	        	dummyImageView.setImageBitmap(result);
+	        	dummyImageView.setImageDrawable(drawable);
+	        	GetXMLTask task = new GetXMLTask();
+	            
+	            task.execute(url);
 	        }
 	 
 	        // Creates Bitmap from InputStream and returns it
-	        private Bitmap downloadImage(String url) {
+	        /*private Bitmap downloadImage(String url) {
 	            Bitmap bitmap = null;
 	            InputStream stream = null;
 	            BitmapFactory.Options bmOptions = new BitmapFactory.Options();
@@ -184,10 +189,10 @@ public class AccountActivity extends FragmentActivity {
 	                e1.printStackTrace();
 	            }
 	            return bitmap;
-	        }
+	        }*/
 	 
 	        // Makes HttpURLConnection and returns InputStream
-	        private InputStream getHttpConnection(String urlString)
+	        /*private InputStream getHttpConnection(String urlString)
 	                throws IOException {
 	            InputStream stream = null;
 	            URL url = new URL(urlString);
@@ -205,6 +210,20 @@ public class AccountActivity extends FragmentActivity {
 	                ex.printStackTrace();
 	            }
 	            return stream;
+	        }*/
+	        
+	        private Drawable LoadImageFromWebOperations(String url) {
+
+	            try {
+	                InputStream is = (InputStream) new URL(url).getContent();
+	                Drawable d = Drawable.createFromStream(is, "src name");
+	                is.close();
+	                return d;
+	            } catch (Exception e) {
+	                System.out.println("Exc=" + e);
+	                return null;
+	            }
+
 	        }
 	    }
 	}
