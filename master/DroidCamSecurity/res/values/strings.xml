@@ -30,6 +30,7 @@
     <string name="sign_up_unsuccess">Sorry, it\'s not possible to Sign Up at the moment.</string>
     
     <!-- Account Activity Strings -->
+    <string name="url_get_image">http://www.catsart.net/WebservicesPHP/get_image.php</string>
     <string name="title_activity_account">Welcome</string>
     <string name="title_section1">Live</string>
     <string name="title_section2">Configurations</string>

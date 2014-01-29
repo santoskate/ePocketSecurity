@@ -89,9 +89,7 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int sign_up_success=0x7f060012;
         public static final int sign_up_unsuccess=0x7f060013;
         public static final int submit_button=0x7f060001;
-        /**  Account Activity Strings 
-         */
-        public static final int title_activity_account=0x7f060014;
+        public static final int title_activity_account=0x7f060015;
         public static final int title_activity_sign_in=0x7f06000b;
         public static final int title_activity_sign_up=0x7f06000e;
         public static final int title_confirmpwd=0x7f06000f;
@@ -99,15 +97,18 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int title_ipcam=0x7f060010;
         public static final int title_ippwd=0x7f060011;
         public static final int title_password=0x7f060003;
-        public static final int title_section1=0x7f060015;
-        public static final int title_section2=0x7f060016;
-        public static final int title_section3=0x7f060017;
+        public static final int title_section1=0x7f060016;
+        public static final int title_section2=0x7f060017;
+        public static final int title_section3=0x7f060018;
         /**  Common strings 
          */
         public static final int url=0x7f060000;
         /**  Sign Up Activity Strings 
          */
         public static final int url_create_user=0x7f06000d;
+        /**  Account Activity Strings 
+         */
+        public static final int url_get_image=0x7f060014;
         /**  Sign In Activity Strings 
          */
         public static final int url_login=0x7f06000a;

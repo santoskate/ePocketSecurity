@@ -1,13 +1,26 @@
 package com.example.droidcamsecurity;
 
+import java.io.BufferedInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
+import org.apache.http.NameValuePair;
+import org.apache.http.message.BasicNameValuePair;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import businessLayer.util.JSONParser;
+
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
@@ -20,6 +33,8 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.NavUtils;
 import android.support.v4.view.ViewPager;
+import android.util.Base64;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -124,6 +139,11 @@ public class AccountActivity extends FragmentActivity {
 		public static final String ARG_SECTION_NUMBER = "section_number";
 		
 		ImageView dummyImageView;
+		JSONParser jsonParser = new JSONParser();
+		
+		// JSON Node names
+	    private static final String TAG_SUCCESS = "success";
+	    private static final String TAG_MESSAGE = "message";
 
 		public DummySectionFragment() {
 		}
@@ -151,15 +171,24 @@ public class AccountActivity extends FragmentActivity {
 		
 		private class GetXMLTask extends AsyncTask<String, Void, Bitmap> {
 			private String url;
-			Drawable drawable;
 	        @Override
 	        protected Bitmap doInBackground(String... urls) {
 	        	url = urls[0];
+	        	
+	        	// Building Parameters
+		        List<NameValuePair> params = new ArrayList<NameValuePair>();
+		        params.add(new BasicNameValuePair("email", "p"));
+		        params.add(new BasicNameValuePair("cam_ip", "192.168.45.82"));
+
+		        // getting JSON Object from the login WeService
+		        JSONObject json = jsonParser.makeHttpRequest(getText(R.string.url_get_image).toString(),
+		                "POST", params);
+		        
+		        // logging
+		        Log.d("Create Response", json.toString());
+		        
 	            Bitmap map = null;
-	            //for (String url : urls) {
-	                //map = downloadImage(url);
-	            	drawable = LoadImageFromWebOperations(url);
-	            //}
+	            map = loadImageFromUrl(url);
 	            	
 	            return map;
 	        }
@@ -167,63 +196,38 @@ public class AccountActivity extends FragmentActivity {
 	        // Sets the Bitmap returned by doInBackground
 	        @Override
 	        protected void onPostExecute(Bitmap result) {
-	        	dummyImageView.setImageDrawable(drawable);
+	        	dummyImageView.setImageBitmap(result);
 	        	GetXMLTask task = new GetXMLTask();
 	            
 	            task.execute(url);
 	        }
-	 
-	        // Creates Bitmap from InputStream and returns it
-	        /*private Bitmap downloadImage(String url) {
-	            Bitmap bitmap = null;
-	            InputStream stream = null;
-	            BitmapFactory.Options bmOptions = new BitmapFactory.Options();
-	            bmOptions.inSampleSize = 1;
-	 
-	            try {
-	                stream = getHttpConnection(url);
-	                bitmap = BitmapFactory.
-	                        decodeStream(stream, null, bmOptions);
-	                stream.close();
-	            } catch (IOException e1) {
-	                e1.printStackTrace();
-	            }
-	            return bitmap;
-	        }*/
-	 
-	        // Makes HttpURLConnection and returns InputStream
-	        /*private InputStream getHttpConnection(String urlString)
-	                throws IOException {
-	            InputStream stream = null;
-	            URL url = new URL(urlString);
-	            URLConnection connection = url.openConnection();
-	 
-	            try {
-	                HttpURLConnection httpConnection = (HttpURLConnection) connection;
-	                httpConnection.setRequestMethod("GET");
-	                httpConnection.connect();
-	 
-	                if (httpConnection.getResponseCode() == HttpURLConnection.HTTP_OK) {
-	                    stream = httpConnection.getInputStream();
-	                }
-	            } catch (Exception ex) {
-	                ex.printStackTrace();
-	            }
-	            return stream;
-	        }*/
 	        
-	        private Drawable LoadImageFromWebOperations(String url) {
-
+	        public Bitmap loadImageFromUrl(String url) {
+	            URL m;
+	            InputStream i = null;
+	            BufferedInputStream bis = null;
+	            ByteArrayOutputStream out =null;
 	            try {
-	                InputStream is = (InputStream) new URL(url).getContent();
-	                Drawable d = Drawable.createFromStream(is, "src name");
-	                is.close();
-	                return d;
-	            } catch (Exception e) {
-	                System.out.println("Exc=" + e);
-	                return null;
+	                m = new URL(url);
+	                i = (InputStream) m.getContent();
+	                bis = new BufferedInputStream(i,1024 * 8);
+	                out = new ByteArrayOutputStream();
+	                int len=0;
+	                byte[] buffer = new byte[1024];
+	                while((len = bis.read(buffer)) != -1){
+	                    out.write(buffer, 0, len);
+	                }
+	                out.close();
+	                bis.close();
+	            } catch (MalformedURLException e1) {
+	                e1.printStackTrace();
+	            } catch (IOException e) {
+	                e.printStackTrace();
 	            }
-
+	            byte[] data = out.toByteArray();
+	            Bitmap bitmap = BitmapFactory.decodeByteArray(data, 0, data.length);
+	            //Drawable d = Drawable.createFromStream(i, "src");
+	            return bitmap;
 	        }
 	    }
 	}
