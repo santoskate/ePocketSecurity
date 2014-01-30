@@ -40,6 +40,7 @@ public class SignInActivity extends Activity {
 	
 	// JSON Node names
     private static final String TAG_SUCCESS = "success";
+    private static final String TAG_MESSAGE = "message";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -131,6 +132,10 @@ public class SignInActivity extends Activity {
 	            if (success == 1) {
 	                // successfully login
 	                Intent i = new Intent(getApplicationContext(), AccountActivity.class);
+	                Bundle b = new Bundle();
+	                b.putString("email", email.getText().toString());
+	                b.putString("camIp", json.getString(TAG_MESSAGE));
+	                i.putExtras(b);
 	                startActivity(i);
 	            	
 	            	// To finish Parent and go on

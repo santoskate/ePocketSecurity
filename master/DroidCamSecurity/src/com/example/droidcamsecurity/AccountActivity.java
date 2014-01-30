@@ -60,6 +60,8 @@ public class AccountActivity extends FragmentActivity {
 	 * The {@link ViewPager} that will host the section contents.
 	 */
 	ViewPager mViewPager;
+	static String e;
+	static String ip;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -74,6 +76,10 @@ public class AccountActivity extends FragmentActivity {
 		// Set up the ViewPager with the sections adapter.
 		mViewPager = (ViewPager) findViewById(R.id.pager);
 		mViewPager.setAdapter(mSectionsPagerAdapter);
+		
+		Bundle b = getIntent().getExtras();
+    	e = b.getString("email");
+    	ip = b.getString("camIp");
 
 	}
 
@@ -97,11 +103,12 @@ public class AccountActivity extends FragmentActivity {
 		@Override
 		public Fragment getItem(int position) {
 			// getItem is called to instantiate the fragment for the given page.
-			// Return a DummySectionFragment (defined as a static inner class
+			// Return a AccountSectionFragment (defined as a static inner class
 			// below) with the page number as its lone argument.
-			Fragment fragment = new DummySectionFragment();
+			Fragment fragment = new AccountSectionFragment();
 			Bundle args = new Bundle();
-			args.putInt(DummySectionFragment.ARG_SECTION_NUMBER, position + 1);
+			args.putInt(AccountSectionFragment.ARG_SECTION_NUMBER, position + 1);
+			args.putString("about", getText(R.string.content_about).toString());
 			fragment.setArguments(args);
 			return fragment;
 		}
@@ -131,21 +138,21 @@ public class AccountActivity extends FragmentActivity {
 	 * A dummy fragment representing a section of the app, but that simply
 	 * displays dummy text.
 	 */
-	public static class DummySectionFragment extends Fragment {
+	public static class AccountSectionFragment extends Fragment {
 		/**
 		 * The fragment argument representing the section number for this
 		 * fragment.
 		 */
 		public static final String ARG_SECTION_NUMBER = "section_number";
 		
-		ImageView dummyImageView;
+		ImageView accountImageView;
 		JSONParser jsonParser = new JSONParser();
 		
 		// JSON Node names
 	    private static final String TAG_SUCCESS = "success";
 	    private static final String TAG_MESSAGE = "message";
 
-		public DummySectionFragment() {
+		public AccountSectionFragment() {
 		}
 
 		@Override
@@ -153,23 +160,31 @@ public class AccountActivity extends FragmentActivity {
 				Bundle savedInstanceState) {
 			View rootView = inflater.inflate(R.layout.fragment_account_dummy,
 					container, false);
-			TextView dummyTextView = (TextView) rootView
-					.findViewById(R.id.section_label);
-			dummyTextView.setText(Integer.toString(getArguments().getInt(
-					ARG_SECTION_NUMBER)));
+			Bundle b = getArguments();
+			int i = b.getInt(AccountSectionFragment.ARG_SECTION_NUMBER);
 			
-			dummyImageView = (ImageView) rootView
-					.findViewById(R.id.streamingImage);
+			if (i == 1){ 		// content for the first fragment
+				accountImageView = (ImageView) rootView
+						.findViewById(R.id.streamingImage);
+					
+				// Create an object for subclass of AsyncTask to get de image
+		        GetImageTask task = new GetImageTask();
+		        
+		        // Execute the task
+		        task.execute(new String[] { getText(R.string.url).toString()+"p/image.jpg" });
 				
-			// Create an object for subclass of AsyncTask
-	        GetXMLTask task = new GetXMLTask();
-	        // Execute the task
-	        task.execute(new String[] { getText(R.string.url).toString()+"p/image.jpg" });
+			} else if (i == 2){ 	// content for the second fragment
+				
+			} else if (i == 3){		// content for the third fragment
+				TextView tx = (TextView) rootView.findViewById(R.id.section_label);
+				tx.setText(R.string.content_about);
+			}
+			
 			
 			return rootView;
 		}
 		
-		private class GetXMLTask extends AsyncTask<String, Void, Bitmap> {
+		private class GetImageTask extends AsyncTask<String, Void, Bitmap> {
 			private String url;
 	        @Override
 	        protected Bitmap doInBackground(String... urls) {
@@ -177,8 +192,8 @@ public class AccountActivity extends FragmentActivity {
 	        	
 	        	// Building Parameters
 		        List<NameValuePair> params = new ArrayList<NameValuePair>();
-		        params.add(new BasicNameValuePair("email", "p"));
-		        params.add(new BasicNameValuePair("cam_ip", "192.168.45.82"));
+		        params.add(new BasicNameValuePair("email", e));
+		        params.add(new BasicNameValuePair("cam_ip", ip));
 
 		        // getting JSON Object from the login WeService
 		        JSONObject json = jsonParser.makeHttpRequest(getText(R.string.url_get_image).toString(),
@@ -188,7 +203,9 @@ public class AccountActivity extends FragmentActivity {
 		        Log.d("Create Response", json.toString());
 		        
 	            Bitmap map = null;
-	            map = loadImageFromUrl(url);
+	            while (map == null){
+	            	map = loadImageFromUrl(url);
+	            }
 	            	
 	            return map;
 	        }
@@ -196,8 +213,9 @@ public class AccountActivity extends FragmentActivity {
 	        // Sets the Bitmap returned by doInBackground
 	        @Override
 	        protected void onPostExecute(Bitmap result) {
-	        	dummyImageView.setImageBitmap(result);
-	        	GetXMLTask task = new GetXMLTask();
+	        	accountImageView.setImageBitmap(result);
+	        	
+	        	GetImageTask task = new GetImageTask();
 	            
 	            task.execute(url);
 	        }
