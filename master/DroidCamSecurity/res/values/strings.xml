@@ -6,8 +6,8 @@
     <string name="submit_button">Submit</string>
     <string name="title_email">Email</string>
     <string name="title_password">Password</string>
-    <string name="msg_progress">Wait...</string>
-    <string name="content_about">Discente: Catarina Santos nº 58537.\nDocente: Prof. Sancho Oliveira</string>
+    <string name="msg_progress">Wait</string>
+    <string name="content_about">Disciplina: Introdução ao Desenvolvimento de Software de Código Aberto\n\nDiscente: Catarina Santos nº 58537.\nDocente: Prof. Sancho Oliveira</string>
 
     <!-- Fullscreen Activity Strings -->
     <string name="app_name">ePocket Security</string>
@@ -29,12 +29,20 @@
     <string name="title_ippwd">Camera Password</string>
     <string name="sign_up_success">Successfuly Sign Up!</string>
     <string name="sign_up_unsuccess">Sorry, it\'s not possible to Sign Up at the moment.</string>
-    
+
     <!-- Account Activity Strings -->
     <string name="url_get_image">http://www.catsart.net/WebservicesPHP/get_image.php</string>
     <string name="title_activity_account">Welcome</string>
     <string name="title_section1">Live</string>
-    <string name="title_section2">Configurations</string>
-    <string name="title_section3">About</string>
+    <string name="title_section2">About</string>
+    
+    <!-- Account Settings Strings -->
+    <string name="url_update_account">http://www.catsart.net/WebservicesPHP/update_account.php</string>
+    <string name="title_activity_settings">Account Settings</string>
+    <string name="title_change_pwd">Change Password</string>
+    <string name="title_actual_pwd">Actual Password</string>
+    <string name="title_new_pwd">New Password</string>
+    <string name="title_newConf_pwd">Confirm New Password</string>
+    <string name="update_account_unsuccess">Sorry, your actual password is not correct.</string>
 
 </resources>

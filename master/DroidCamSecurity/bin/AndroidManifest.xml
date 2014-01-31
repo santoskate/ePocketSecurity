@@ -6,7 +6,7 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
 
-    <uses-sdk
+    <uses-sdk 
         android:minSdkVersion="11"
         android:targetSdkVersion="18" />
 
@@ -43,8 +43,12 @@
                 android:value="com.example.droidcamsecurity.FullscreenActivity" />
         </activity>
         <activity
-            android:name="com.example.droidcamsecurity.AccountActivity"
+            android:name="viewLayer.AccountActivity"
             android:label="@string/title_activity_account" >
+        </activity>
+        <activity
+            android:name="viewLayer.SettingsActivity"
+            android:label="@string/title_activity_settings" >
         </activity>
     </application>
 

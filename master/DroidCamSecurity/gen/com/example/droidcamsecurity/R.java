@@ -39,42 +39,51 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int ic_launcher=0x7f020000;
     }
     public static final class id {
-        public static final int action_settings=0x7f090017;
+        public static final int action_settings=0x7f09001e;
         public static final int button1=0x7f090006;
         public static final int dummy_button=0x7f090004;
-        public static final int eTextEmail=0x7f090008;
-        public static final int eTextPwd=0x7f09000a;
-        public static final int eText_confpwd=0x7f090010;
-        public static final int eText_email=0x7f09000c;
-        public static final int eText_ipcam=0x7f090012;
-        public static final int eText_ippwd=0x7f090014;
-        public static final int eText_password=0x7f09000e;
+        public static final int eTextEmail=0x7f09000f;
+        public static final int eTextPwd=0x7f090011;
+        public static final int eText_confpwd=0x7f090017;
+        public static final int eText_email=0x7f090013;
+        public static final int eText_ipcam=0x7f090019;
+        public static final int eText_ippwd=0x7f09001b;
+        public static final int eText_password=0x7f090015;
+        public static final int etActualPwd=0x7f090009;
+        public static final int etNewConfPwd=0x7f09000d;
+        public static final int etNewPwd=0x7f09000b;
         public static final int fullscreen_content=0x7f090002;
         public static final int fullscreen_content_controls=0x7f090003;
         public static final int fullscreen_content_controls2=0x7f090005;
         public static final int pager=0x7f090000;
         public static final int pager_title_strip=0x7f090001;
-        public static final int section_label=0x7f090015;
-        public static final int streamingImage=0x7f090016;
-        public static final int tViewEmail=0x7f090007;
-        public static final int tViewPwd=0x7f090009;
-        public static final int tView_confpwd=0x7f09000f;
-        public static final int tView_email=0x7f09000b;
-        public static final int tView_ipcam=0x7f090011;
-        public static final int tView_ippwd=0x7f090013;
-        public static final int tView_password=0x7f09000d;
+        public static final int section_label=0x7f09001c;
+        public static final int streamingImage=0x7f09001d;
+        public static final int tViewEmail=0x7f09000e;
+        public static final int tViewPwd=0x7f090010;
+        public static final int tView_confpwd=0x7f090016;
+        public static final int tView_email=0x7f090012;
+        public static final int tView_ipcam=0x7f090018;
+        public static final int tView_ippwd=0x7f09001a;
+        public static final int tView_password=0x7f090014;
+        public static final int textView1=0x7f090007;
+        public static final int tvActualPwd=0x7f090008;
+        public static final int tvNewConfPwd=0x7f09000c;
+        public static final int tvNewPwd=0x7f09000a;
     }
     public static final class layout {
         public static final int activity_account=0x7f030000;
         public static final int activity_fullscreen=0x7f030001;
-        public static final int activity_sign_in=0x7f030002;
-        public static final int activity_sign_up=0x7f030003;
-        public static final int fragment_account_dummy=0x7f030004;
+        public static final int activity_settings=0x7f030002;
+        public static final int activity_sign_in=0x7f030003;
+        public static final int activity_sign_up=0x7f030004;
+        public static final int fragment_account_dummy=0x7f030005;
     }
     public static final class menu {
         public static final int account=0x7f080000;
-        public static final int sign_in=0x7f080001;
-        public static final int sign_up=0x7f080002;
+        public static final int settings=0x7f080001;
+        public static final int sign_in=0x7f080002;
+        public static final int sign_up=0x7f080003;
     }
     public static final class string {
         public static final int action_settings=0x7f06000a;
@@ -91,16 +100,21 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         public static final int sign_up_unsuccess=0x7f060014;
         public static final int submit_button=0x7f060001;
         public static final int title_activity_account=0x7f060016;
+        public static final int title_activity_settings=0x7f06001a;
         public static final int title_activity_sign_in=0x7f06000c;
         public static final int title_activity_sign_up=0x7f06000f;
+        public static final int title_actual_pwd=0x7f06001c;
+        public static final int title_change_pwd=0x7f06001b;
         public static final int title_confirmpwd=0x7f060010;
         public static final int title_email=0x7f060002;
         public static final int title_ipcam=0x7f060011;
         public static final int title_ippwd=0x7f060012;
+        public static final int title_newConf_pwd=0x7f06001e;
+        public static final int title_new_pwd=0x7f06001d;
         public static final int title_password=0x7f060003;
         public static final int title_section1=0x7f060017;
         public static final int title_section2=0x7f060018;
-        public static final int title_section3=0x7f060019;
+        public static final int update_account_unsuccess=0x7f06001f;
         /**  Common strings 
          */
         public static final int url=0x7f060000;
@@ -113,6 +127,9 @@ or to a theme attribute in the form "<code>?[<i>package</i>:][<i>type</i>:]<i>na
         /**  Sign In Activity Strings 
          */
         public static final int url_login=0x7f06000b;
+        /**  Account Settings Strings 
+         */
+        public static final int url_update_account=0x7f060019;
     }
     public static final class style {
         /** 

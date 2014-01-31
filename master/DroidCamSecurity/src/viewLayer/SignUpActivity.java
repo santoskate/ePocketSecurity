@@ -90,6 +90,8 @@ public class SignUpActivity extends Activity {
 		camPwd = (EditText) findViewById(R.id.eText_ippwd);
 		
 		if (Authentication.signUpValidateForm(SignUpActivity.this) == 0){
+			
+			// Execute async task for signup
 			new CreateNewAccount().execute();
 		}
 		
@@ -97,14 +99,14 @@ public class SignUpActivity extends Activity {
 
 	
 	/**
-     * Background Async Task to Create new product
-     * */
+	 * Background Async Task to Create new Account - SignUp
+	 * */
 	class CreateNewAccount extends AsyncTask<String, String, String> {
 		
 		public Boolean flag;
 		/**
-         * Before starting background thread Show Progress Dialog
-         * */
+		 * Before starting background thread Show Progress Dialog
+		 * */
 		@Override
 		protected void onPreExecute() {
 			super.onPreExecute();
@@ -116,8 +118,8 @@ public class SignUpActivity extends Activity {
 		}
 		
 		/**
-         * Creating User account
-         * */
+		 * Creating User account
+		 * */
 		protected String doInBackground(String... args) {
 			// Building Parameters
 	        List<NameValuePair> params = new ArrayList<NameValuePair>();

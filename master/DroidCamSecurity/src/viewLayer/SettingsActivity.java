@@ -8,6 +8,8 @@ import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import viewLayer.SignInActivity.LogInValidation;
+import businessLayer.AccountManagement;
 import businessLayer.Authentication;
 import businessLayer.util.JSONParser;
 
@@ -22,82 +24,54 @@ import android.app.AlertDialog.Builder;
 import android.content.Intent;
 import android.util.Log;
 import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
-import android.support.v4.app.NavUtils;
 
-public class SignInActivity extends Activity {
+public class SettingsActivity extends Activity {
 	
 	// Progress Dialog
 	private ProgressDialog pDialog;
 	
 	JSONParser jsonParser = new JSONParser();
-		
-	private EditText email;
-	private EditText password;
 	
 	// JSON Node names
     private static final String TAG_SUCCESS = "success";
     private static final String TAG_MESSAGE = "message";
+	
+	EditText eActualPwd;
+	EditText eNewPwd;
+	EditText eNewConfPwd;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_sign_in);
-		// Show the Up button in the action bar.
-		setupActionBar();
-	}
-
-	/**
-	 * Set up the {@link android.app.ActionBar}.
-	 */
-	private void setupActionBar() {
-
-		getActionBar().setDisplayHomeAsUpEnabled(true);
-
+		setContentView(R.layout.activity_settings);
 	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.sign_in, menu);
+		getMenuInflater().inflate(R.menu.settings, menu);
 		return true;
 	}
 
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		switch (item.getItemId()) {
-		case android.R.id.home:
-			// This ID represents the Home or Up button. In the case of this
-			// activity, the Up button is shown. Use NavUtils to allow users
-			// to navigate up one level in the application structure. For
-			// more details, see the Navigation pattern on Android Design:
-			//
-			// http://developer.android.com/design/patterns/navigation.html#up-vs-back
-			//
-			NavUtils.navigateUpFromSameTask(this);
-			return true;
-		}
-		return super.onOptionsItemSelected(item);
-	}
-	
-	public void logIn(View view) {
-		email = (EditText) findViewById(R.id.eTextEmail);
-		password = (EditText) findViewById(R.id.eTextPwd);
+	public void updateAccount(View view){
+		eActualPwd = (EditText) findViewById(R.id.etActualPwd);
+		eNewPwd = (EditText) findViewById(R.id.etNewPwd);
+		eNewConfPwd = (EditText) findViewById(R.id.etNewConfPwd);
 		
-		if (Authentication.signInValidateForm(SignInActivity.this) == 0){
+		if (AccountManagement.updateAccountDataValidateForm(SettingsActivity.this) == 0){
 			
-			// Execute async task for login
-			new LogInValidation().execute();
+			// Execute async task to update data
+			new UpdatingData().execute();
 		}
-
+		
 	}
 	
 	/**
-	 * Background Async Task to SignIn
+	 * Background Async Task to Update account data
 	 * */
-	class LogInValidation extends AsyncTask<String, String, String> {
+	class UpdatingData extends AsyncTask<String, String, String> {
 		
 		public Boolean flag = true;
 		/**
@@ -106,7 +80,7 @@ public class SignInActivity extends Activity {
 		@Override
 		protected void onPreExecute() {
 			super.onPreExecute();
-			pDialog = new ProgressDialog(SignInActivity.this);
+			pDialog = new ProgressDialog(SettingsActivity.this);
 			pDialog.setMessage(getText(R.string.msg_progress).toString());
 			pDialog.setIndeterminate(false);
 			pDialog.setCancelable(true);
@@ -116,11 +90,12 @@ public class SignInActivity extends Activity {
 		protected String doInBackground(String... args) {
 			// Building Parameters
 	        List<NameValuePair> params = new ArrayList<NameValuePair>();
-	        params.add(new BasicNameValuePair("email", email.getText().toString()));
-	        params.add(new BasicNameValuePair("password", password.getText().toString()));
+	        params.add(new BasicNameValuePair("email", getIntent().getExtras().getString("email")));
+	        params.add(new BasicNameValuePair("password", eActualPwd.getText().toString()));
+	        params.add(new BasicNameValuePair("new_password", eNewPwd.getText().toString()));
 
 	        // getting JSON Object from the login WeService
-	        JSONObject json = jsonParser.makeHttpRequest(getText(R.string.url_login).toString(),
+	        JSONObject json = jsonParser.makeHttpRequest(getText(R.string.url_update_account).toString(),
 	                "POST", params);
 
 	        // logging
@@ -131,16 +106,7 @@ public class SignInActivity extends Activity {
 	            int success = json.getInt(TAG_SUCCESS);
 	            
 	            if (success == 1) {
-	                // successfully login
-	                Intent i = new Intent(getApplicationContext(), AccountActivity.class);
-	                Bundle b = new Bundle();
-	                b.putString("email", email.getText().toString());
-	                b.putString("camIp", json.getString(TAG_MESSAGE));
-	                i.putExtras(b);
-	                startActivity(i);
-	            	
-	            	// To finish Parent and go on
-	            	setResult(2);
+	                // successfully update
 	                finish();
 	            	
 	            } else {
@@ -163,17 +129,16 @@ public class SignInActivity extends Activity {
 			// dismiss the dialog once done
 			pDialog.dismiss();
 			
-			Builder alert = new AlertDialog.Builder(SignInActivity.this);
-			alert.setTitle(getString(R.string.title_activity_sign_in));
+			Builder alert = new AlertDialog.Builder(SettingsActivity.this);
+			alert.setTitle(getString(R.string.title_activity_settings));
 			
 			// If there's an error, show the error popup
 			if(!flag){
-				alert.setMessage(getString(R.string.sign_in_unsuccess));
+				alert.setMessage(getString(R.string.update_account_unsuccess));
 				alert.setPositiveButton("OK",null);
 				alert.show(); 
 			}
 		}
 		
 	}
-
 }

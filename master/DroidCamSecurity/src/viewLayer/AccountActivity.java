@@ -1,41 +1,34 @@
-package com.example.droidcamsecurity;
+package viewLayer;
 
 import java.io.BufferedInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.UnsupportedEncodingException;
-import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
-import org.json.JSONException;
 import org.json.JSONObject;
+
+import com.example.droidcamsecurity.R;
 
 import businessLayer.util.JSONParser;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.drawable.Drawable;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.app.NavUtils;
 import android.support.v4.view.ViewPager;
-import android.util.Base64;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -89,6 +82,19 @@ public class AccountActivity extends FragmentActivity {
 		getMenuInflater().inflate(R.menu.account, menu);
 		return true;
 	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+	    switch (item.getItemId()) {
+	        case R.id.action_settings:
+	            Intent settings = new Intent(AccountActivity.this, SettingsActivity.class);
+	            settings.putExtra("email", e);
+	            startActivity(settings);
+	            return true;
+	        default:
+	            return super.onContextItemSelected(item);
+	    }
+	}
 
 	/**
 	 * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
@@ -115,8 +121,8 @@ public class AccountActivity extends FragmentActivity {
 
 		@Override
 		public int getCount() {
-			// Show 3 total pages.
-			return 3;
+			// Show 2 total pages.
+			return 2;
 		}
 
 		@Override
@@ -127,15 +133,13 @@ public class AccountActivity extends FragmentActivity {
 				return getString(R.string.title_section1).toUpperCase(l);
 			case 1:
 				return getString(R.string.title_section2).toUpperCase(l);
-			case 2:
-				return getString(R.string.title_section3).toUpperCase(l);
 			}
 			return null;
 		}
 	}
 
 	/**
-	 * A dummy fragment representing a section of the app, but that simply
+	 * A Account fragment representing a section of the app, but that simply
 	 * displays dummy text.
 	 */
 	public static class AccountSectionFragment extends Fragment {
@@ -147,10 +151,6 @@ public class AccountActivity extends FragmentActivity {
 		
 		ImageView accountImageView;
 		JSONParser jsonParser = new JSONParser();
-		
-		// JSON Node names
-	    private static final String TAG_SUCCESS = "success";
-	    private static final String TAG_MESSAGE = "message";
 
 		public AccountSectionFragment() {
 		}
@@ -171,11 +171,9 @@ public class AccountActivity extends FragmentActivity {
 		        GetImageTask task = new GetImageTask();
 		        
 		        // Execute the task
-		        task.execute(new String[] { getText(R.string.url).toString()+"p/image.jpg" });
+		        task.execute(new String[] { getText(R.string.url).toString()+ e + "/image.jpg" });
 				
 			} else if (i == 2){ 	// content for the second fragment
-				
-			} else if (i == 3){		// content for the third fragment
 				TextView tx = (TextView) rootView.findViewById(R.id.section_label);
 				tx.setText(R.string.content_about);
 			}
@@ -203,9 +201,9 @@ public class AccountActivity extends FragmentActivity {
 		        Log.d("Create Response", json.toString());
 		        
 	            Bitmap map = null;
-	            while (map == null){
+	            //while (map == null){
 	            	map = loadImageFromUrl(url);
-	            }
+	            //}
 	            	
 	            return map;
 	        }
@@ -213,11 +211,13 @@ public class AccountActivity extends FragmentActivity {
 	        // Sets the Bitmap returned by doInBackground
 	        @Override
 	        protected void onPostExecute(Bitmap result) {
-	        	accountImageView.setImageBitmap(result);
-	        	
-	        	GetImageTask task = new GetImageTask();
-	            
-	            task.execute(url);
+	        	if(isAdded()){
+		        	accountImageView.setImageBitmap(result);
+		        	
+		        	GetImageTask task = new GetImageTask();
+		            
+		            task.execute(url);
+		        }
 	        }
 	        
 	        public Bitmap loadImageFromUrl(String url) {
@@ -244,7 +244,7 @@ public class AccountActivity extends FragmentActivity {
 	            }
 	            byte[] data = out.toByteArray();
 	            Bitmap bitmap = BitmapFactory.decodeByteArray(data, 0, data.length);
-	            //Drawable d = Drawable.createFromStream(i, "src");
+	            
 	            return bitmap;
 	        }
 	    }
