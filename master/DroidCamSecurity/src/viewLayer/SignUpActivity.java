@@ -32,6 +32,7 @@ public class SignUpActivity extends Activity {
 	// Progress Dialog
 	private ProgressDialog pDialog;
 	
+	private EditText name;
 	private EditText email;
 	private EditText password;
 	private EditText ipCam;
@@ -84,6 +85,7 @@ public class SignUpActivity extends Activity {
 	}
 	
 	public void resgisterAccount(View view){
+		name = (EditText) findViewById(R.id.eText_name);
 		email = (EditText) findViewById(R.id.eText_email);
 		password = (EditText) findViewById(R.id.eText_password);
 		ipCam = (EditText) findViewById(R.id.eText_ipcam);
@@ -123,6 +125,7 @@ public class SignUpActivity extends Activity {
 		protected String doInBackground(String... args) {
 			// Building Parameters
 	        List<NameValuePair> params = new ArrayList<NameValuePair>();
+	        params.add(new BasicNameValuePair("name", name.getText().toString()));
 	        params.add(new BasicNameValuePair("email", email.getText().toString()));
 	        params.add(new BasicNameValuePair("password", password.getText().toString()));
 	        params.add(new BasicNameValuePair("cam_ip", ipCam.getText().toString()));

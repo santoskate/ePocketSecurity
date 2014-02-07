@@ -8,9 +8,7 @@ import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import viewLayer.SignInActivity.LogInValidation;
 import businessLayer.AccountManagement;
-import businessLayer.Authentication;
 import businessLayer.util.JSONParser;
 
 import com.example.droidcamsecurity.R;
@@ -36,8 +34,8 @@ public class SettingsActivity extends Activity {
 	
 	// JSON Node names
     private static final String TAG_SUCCESS = "success";
-    private static final String TAG_MESSAGE = "message";
 	
+    EditText eName;
 	EditText eActualPwd;
 	EditText eNewPwd;
 	EditText eNewConfPwd;
@@ -46,6 +44,12 @@ public class SettingsActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_settings);
+		eName = (EditText) findViewById(R.id.etName);
+		eActualPwd = (EditText) findViewById(R.id.etActualPwd);
+		eNewPwd = (EditText) findViewById(R.id.etNewPwd);
+		eNewConfPwd = (EditText) findViewById(R.id.etNewConfPwd);
+		
+		eName.setText(getIntent().getExtras().getString("name"));
 	}
 
 	@Override
@@ -56,9 +60,6 @@ public class SettingsActivity extends Activity {
 	}
 
 	public void updateAccount(View view){
-		eActualPwd = (EditText) findViewById(R.id.etActualPwd);
-		eNewPwd = (EditText) findViewById(R.id.etNewPwd);
-		eNewConfPwd = (EditText) findViewById(R.id.etNewConfPwd);
 		
 		if (AccountManagement.updateAccountDataValidateForm(SettingsActivity.this) == 0){
 			
@@ -90,6 +91,7 @@ public class SettingsActivity extends Activity {
 		protected String doInBackground(String... args) {
 			// Building Parameters
 	        List<NameValuePair> params = new ArrayList<NameValuePair>();
+	        params.add(new BasicNameValuePair("name", eName.getText().toString()));
 	        params.add(new BasicNameValuePair("email", getIntent().getExtras().getString("email")));
 	        params.add(new BasicNameValuePair("password", eActualPwd.getText().toString()));
 	        params.add(new BasicNameValuePair("new_password", eNewPwd.getText().toString()));
@@ -107,7 +109,10 @@ public class SettingsActivity extends Activity {
 	            
 	            if (success == 1) {
 	                // successfully update
-	                finish();
+	            	Intent newIntent = new  Intent();
+	            	newIntent.putExtra("newName", eName.getText().toString());
+	            	setResult(3, newIntent);
+	            	finish();
 	            	
 	            } else {
 	                // Login failed

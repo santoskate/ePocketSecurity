@@ -2,6 +2,7 @@ package viewLayer;
 
 import java.io.BufferedInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.EOFException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
@@ -12,6 +13,7 @@ import java.util.Locale;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.example.droidcamsecurity.R;
@@ -55,6 +57,7 @@ public class AccountActivity extends FragmentActivity {
 	ViewPager mViewPager;
 	static String e;
 	static String ip;
+	static String name;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -73,6 +76,7 @@ public class AccountActivity extends FragmentActivity {
 		Bundle b = getIntent().getExtras();
     	e = b.getString("email");
     	ip = b.getString("camIp");
+    	name = b.getString("name");
 
 	}
 
@@ -84,12 +88,22 @@ public class AccountActivity extends FragmentActivity {
 	}
 	
 	@Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(resultCode==3){
+        	// Update user's name
+        	TextView tx = (TextView) findViewById(R.id.section_label);
+			tx.setText(getText(R.string.welcome_msg) + " " + data.getExtras().getString("newName"));
+        }
+    }
+	
+	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 	    switch (item.getItemId()) {
 	        case R.id.action_settings:
 	            Intent settings = new Intent(AccountActivity.this, SettingsActivity.class);
 	            settings.putExtra("email", e);
-	            startActivity(settings);
+	            settings.putExtra("name", name);
+	            startActivityForResult(settings, 3);
 	            return true;
 	        default:
 	            return super.onContextItemSelected(item);
@@ -158,12 +172,15 @@ public class AccountActivity extends FragmentActivity {
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container,
 				Bundle savedInstanceState) {
-			View rootView = inflater.inflate(R.layout.fragment_account_dummy,
+			View rootView = inflater.inflate(R.layout.fragment_account,
 					container, false);
 			Bundle b = getArguments();
 			int i = b.getInt(AccountSectionFragment.ARG_SECTION_NUMBER);
 			
 			if (i == 1){ 		// content for the first fragment
+				TextView tx = (TextView) rootView.findViewById(R.id.section_label);
+				tx.setText(getText(R.string.welcome_msg) + " " + name);
+				
 				accountImageView = (ImageView) rootView
 						.findViewById(R.id.streamingImage);
 					
@@ -201,9 +218,18 @@ public class AccountActivity extends FragmentActivity {
 		        Log.d("Create Response", json.toString());
 		        
 	            Bitmap map = null;
-	            //while (map == null){
-	            	map = loadImageFromUrl(url);
-	            //}
+	            while (map == null){
+	            	try {
+						if (json.getInt("success") == 0){
+							break;
+						}
+						
+						map = loadImageFromUrl(url);
+					} catch (JSONException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+	            }
 	            	
 	            return map;
 	        }
@@ -212,8 +238,10 @@ public class AccountActivity extends FragmentActivity {
 	        @Override
 	        protected void onPostExecute(Bitmap result) {
 	        	if(isAdded()){
-		        	accountImageView.setImageBitmap(result);
-		        	
+	        		if (result != null){
+	        			accountImageView.setImageBitmap(result);
+	        			accountImageView.invalidate();
+	        		}
 		        	GetImageTask task = new GetImageTask();
 		            
 		            task.execute(url);
@@ -237,13 +265,19 @@ public class AccountActivity extends FragmentActivity {
 	                }
 	                out.close();
 	                bis.close();
+	                i.close();
 	            } catch (MalformedURLException e1) {
 	                e1.printStackTrace();
+	            } catch (EOFException e2){
+	            	e2.printStackTrace();
 	            } catch (IOException e) {
 	                e.printStackTrace();
-	            }
+	            } 
 	            byte[] data = out.toByteArray();
-	            Bitmap bitmap = BitmapFactory.decodeByteArray(data, 0, data.length);
+	            BitmapFactory.Options opts = new BitmapFactory.Options();
+	            opts.inSampleSize = 2;
+	            opts.inPreferredConfig = Bitmap.Config.ARGB_8888;
+	            Bitmap bitmap = BitmapFactory.decodeByteArray(data, 0, data.length, opts);
 	            
 	            return bitmap;
 	        }

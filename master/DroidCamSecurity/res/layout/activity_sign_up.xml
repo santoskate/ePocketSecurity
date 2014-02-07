@@ -19,6 +19,23 @@
         tools:ignore="UselessParent">
         
         <TextView
+	        android:id="@+id/tView_name"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="@string/title_name" />
+
+        <EditText
+            android:id="@+id/eText_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textEmailAddress" >
+
+            <requestFocus />
+
+        </EditText>
+        
+        <TextView
 	        android:id="@+id/tView_email"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
@@ -30,8 +47,6 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:inputType="textEmailAddress" >
-
-            <requestFocus />
 
         </EditText>
 	
