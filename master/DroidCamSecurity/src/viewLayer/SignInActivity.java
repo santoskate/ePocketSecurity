@@ -39,7 +39,8 @@ public class SignInActivity extends Activity {
 	
 	// JSON Node names
     private static final String TAG_SUCCESS = "success";
-    private static final String TAG_MESSAGE = "message";
+    private static final String TAG_NAME = "name";
+    private static final String TAG_CAMIP = "camip";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -135,7 +136,8 @@ public class SignInActivity extends Activity {
 	                Intent i = new Intent(getApplicationContext(), AccountActivity.class);
 	                Bundle b = new Bundle();
 	                b.putString("email", email.getText().toString());
-	                b.putString("camIp", json.getString(TAG_MESSAGE));
+	                b.putString("name", json.getString(TAG_NAME));
+	                b.putString("camIp", json.getString(TAG_CAMIP));
 	                i.putExtras(b);
 	                startActivity(i);
 	            	

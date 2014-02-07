@@ -5,6 +5,7 @@
     <string name="url">http://www.catsart.net/</string>
     <string name="submit_button">Submit</string>
     <string name="title_email">Email</string>
+    <string name="title_name">Name</string>
     <string name="title_password">Password</string>
     <string name="msg_progress">Wait</string>
     <string name="content_about">Disciplina: Introdução ao Desenvolvimento de Software de Código Aberto\n\nDiscente: Catarina Santos nº 58537.\nDocente: Prof. Sancho Oliveira</string>
@@ -39,6 +40,7 @@
     <!-- Account Settings Strings -->
     <string name="url_update_account">http://www.catsart.net/WebservicesPHP/update_account.php</string>
     <string name="title_activity_settings">Account Settings</string>
+    <string name="title_personal_info">Personal Information</string>
     <string name="title_change_pwd">Change Password</string>
     <string name="title_actual_pwd">Actual Password</string>
     <string name="title_new_pwd">New Password</string>

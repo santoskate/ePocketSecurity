@@ -25,18 +25,21 @@ public class Authentication extends Activity {
 	 */
     public static int signUpValidateForm(Activity actSignUp){
     	
+    	TextView tvName = (TextView) actSignUp.findViewById(R.id.tView_name);
     	TextView tvEmail = (TextView) actSignUp.findViewById(R.id.tView_email);
     	TextView tvPwd = (TextView) actSignUp.findViewById(R.id.tView_password);
     	TextView tvConfPwd = (TextView) actSignUp.findViewById(R.id.tView_confpwd);
     	TextView tvIpCam = (TextView) actSignUp.findViewById(R.id.tView_ipcam);
     	TextView tvIpPwd = (TextView) actSignUp.findViewById(R.id.tView_ippwd);
     	
+    	EditText name = (EditText) actSignUp.findViewById(R.id.eText_name);
     	EditText email = (EditText) actSignUp.findViewById(R.id.eText_email);
     	EditText password = (EditText) actSignUp.findViewById(R.id.eText_password);
     	EditText confPwd = (EditText) actSignUp.findViewById(R.id.eText_confpwd);
     	EditText ipCam = (EditText) actSignUp.findViewById(R.id.eText_ipcam);
     	EditText camPwd = (EditText) actSignUp.findViewById(R.id.eText_ippwd);
     	
+    	tvName.setTextColor(Color.BLACK);
     	tvEmail.setTextColor(Color.BLACK);
     	tvPwd.setTextColor(Color.BLACK);
     	tvConfPwd.setTextColor(Color.BLACK);
@@ -46,7 +49,12 @@ public class Authentication extends Activity {
     	int erro = 0;
     	
 		// Validate that the textBoxes aren't empty - BEGIN
-		if (Validations.eTextIsEmpty(email)){
+    	if (Validations.eTextIsEmpty(name)){
+			tvName.setTextColor(Color.RED);
+			erro = 1;
+		}
+    	
+    	if (Validations.eTextIsEmpty(email)){
 			tvEmail.setTextColor(Color.RED);
 			erro = 1;
 		}

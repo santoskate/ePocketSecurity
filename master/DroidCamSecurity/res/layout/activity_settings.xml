@@ -8,19 +8,53 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".SettingsActivity" >
 
-    <TextView
-        android:id="@+id/textView1"
+    
+    
+    <LinearLayout
+        android:id="@+id/first"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/title_change_pwd" 
-        android:textAppearance="?android:attr/textAppearanceLarge" />
+        android:orientation="vertical" >
+
+        <TextView
+	        android:id="@+id/textView0"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="@string/title_personal_info" 
+	        android:textAppearance="?android:attr/textAppearanceMedium" />
+        
+        <TextView
+            android:id="@+id/tvName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/title_name"
+            android:textAppearance="?android:attr/textAppearanceSmall" />
+
+        <EditText
+            android:id="@+id/etName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPassword" >
+
+            <requestFocus />
+        </EditText>
+        
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/textView1"
-        android:layout_below="@+id/textView1"
+        android:layout_alignLeft="@+id/first"
+        android:layout_below="@+id/first"
+        android:layout_marginTop="30dp"
         android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/textView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/title_change_pwd"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
 
         <TextView
             android:id="@+id/tvActualPwd"
@@ -33,11 +67,8 @@
             android:id="@+id/etActualPwd"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textPassword" >
+            android:inputType="textPassword" />
 
-            <requestFocus />
-        </EditText>
-        
         <TextView
             android:id="@+id/tvNewPwd"
             android:layout_width="wrap_content"
@@ -49,10 +80,8 @@
             android:id="@+id/etNewPwd"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textPassword" >
+            android:inputType="textPassword" />
 
-        </EditText>
-        
         <TextView
             android:id="@+id/tvNewConfPwd"
             android:layout_width="wrap_content"
@@ -64,17 +93,14 @@
             android:id="@+id/etNewConfPwd"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textPassword" >
-
-        </EditText>
+            android:inputType="textPassword" />
 
         <Button
             android:id="@+id/button1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/submit_button" 
-            android:onClick="updateAccount"/>
-
+            android:onClick="updateAccount"
+            android:text="@string/submit_button" />
     </LinearLayout>
 
 </RelativeLayout>
